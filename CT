@@ -2,12 +2,10 @@
 #include <stdlib.h>
 #include <time.h> 
 
-// Procedure to shuffle and return a card from the deck
 int drawCard(int deck[], int *deckIndex) {
     return deck[(*deckIndex)++];
 }
 
-// Procedure to calculate the hand total, accounting for aces
 int calculateTotal(int hand[], int numCards) {
     int total = 0, aces = 0;
     for (int i = 0; i < numCards; i++) {
@@ -26,7 +24,6 @@ int calculateTotal(int hand[], int numCards) {
 int main() {
     srand(time(NULL));
 
-    // Initialize and shuffle deck (list)
     int deck[52];
     int deckIndex = 0;
     for (int i = 0; i < 52; i++) deck[i] = (i % 13) + 1;
@@ -41,13 +38,11 @@ int main() {
     int playerHand[10], dealerHand[10];
     int playerCards = 0, dealerCards = 0;
 
-    // Draw initial cards
     playerHand[playerCards++] = drawCard(deck, &deckIndex);
     dealerHand[dealerCards++] = drawCard(deck, &deckIndex);
     playerHand[playerCards++] = drawCard(deck, &deckIndex);
     dealerHand[dealerCards++] = drawCard(deck, &deckIndex);
 
-    // Player's turn
     char input;
     while (calculateTotal(playerHand, playerCards) < 21) {
         printf("Your total is %d. Hit? (y/n): ", calculateTotal(playerHand, playerCards));
@@ -59,7 +54,6 @@ int main() {
     int playerTotal = calculateTotal(playerHand, playerCards);
     printf("Your final total is %d.\n", playerTotal);
 
-    // Dealer's turn
     while (calculateTotal(dealerHand, dealerCards) < 17) {
         dealerHand[dealerCards++] = drawCard(deck, &deckIndex);
     }
@@ -67,7 +61,6 @@ int main() {
     int dealerTotal = calculateTotal(dealerHand, dealerCards);
     printf("Dealer's final total is %d.\n", dealerTotal);
 
-    // Determine winner
     if ((playerTotal > dealerTotal && playerTotal <= 21) || dealerTotal > 21) {
         printf("You win!\n");
     } else if (playerTotal == dealerTotal) {
